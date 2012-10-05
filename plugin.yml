@@ -1,0 +1,10 @@
+name: FC_Announcer
+main: me.Destro168.FC_Announcer.FC_Announcer
+version: 5.1
+description: Supreme Automatic Announcement Plugin
+commands:
+    announcer:
+        description: This command turns the plugin on.
+        permission: FC_Announcer.admin
+softdepend: [Essentials]
+depend: [FC_Suite_Shared]

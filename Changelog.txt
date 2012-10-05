@@ -1,0 +1,48 @@
+**Source Code**
+
+Version: 2.0:
+* Link at project description: http://dev.bukkit.org/server-mods/ultraannouncer/
+* Up to date
+
+**Plugin Versions:**
+
+Version 2.0 -- FINAL:
+* Lots of testing done to ensure features worked as they are supposed to.
+* Heavily updated help. Now features colors AND has proper commands for a few commands. Just 100% more polished now.
+* Added ignore permission to help prevent inheritance of group viewing.
+* Readded success message to clearconfig.
+* Made autoenable command actually work instead of displaying status command. (wrong function call... WOOPSIES)
+* Default interval for announcements is set to 1 minute (60 seconds). The 20 seconds was mostly for me testing. (refix later)
+* New special code!: (SKIPANNOUNCEMENT) - Allows you to make global announcements if you want! To use just add the code (SKIPANNOUNCEMENT) to any announcement line and that line will be skipped but STILL take up the time interval for using that announcement line. I won't be describing the process in full, but you can now stagger announcements for all groups thus letting 1 group always announcement at a certain interval in place of others. You can do a bunch of other staggering with this as well. Want to have 3 announcements with 5 seconds inbetween each other but 10 seconds inbetween each group of 3 announcements? Now you can!
+* Add command now doesn't append a space on the first argument. This gives you the option if you want it or not. Same goes for broadcast tag. No long will you have spaces you may or may not want. Fully customizable announcements are fully yours!
+* Reverted ticks per interval. Seems like bukkit is still doing 20 ticks an interval, at least on my server.
+* Renamed commands add to set, append to add, resetConfig to resetConfigurationFile.
+
+Things that I didn't do:
+* Kept exemption list the way it is. I kind of like it not being in permissions and in the config file. Don't know why, I just do.
+* Increased ammount of announcements per group to 200 and groups to 200. Didn't make infinite... dynamic implementation is cool and all but there are some problems with it that I won't fix because if you skip announcements/skip groups/add too many announcements or groups/tons of other stuff probably, then you can cause big issues. If you need more then 40,000 announcements,.. find a different plugin, sorry, LOL!
+
+Version 1.2:
+* Better way of determining first run for plugin. Fixes null exception on restarts/etc.
+* Cleaned up configuration file a lot. Should be TONS more manageble now and fix infinity issues. If there are still issues please be SPECIFIC as to what you did to replicate it please!
+* Customizable broadcast tag. Has new command: /announcer sbt. Can be any length of words.
+* Updated Interval Time as per Digitalink2008's notice.
+* New feature: exemption list! Now you can add anybody to the exemption list and they will see no broadcasts! Comes with /announcer addExemption|removeExemption|ListExemptions
+
+Version 1.1:
+* Default announcement interval increased from 5 to 20.
+* Renamed permission autoannouncer.admin to ultraannouncer.admin. 
+* If announcements are running on a group with no set announcement text lines, then a warning will pop up now (Bugfix, was meant to be in before). Updated /announcer help a ton.
+* Max number of announcements is now 15. List command updated to /announcer list [group] [lower limit] [upper limit] now to see announcements in the given range. This change was made due to announcements not being visible. Added colors!
+* UltraAnnouncement now supports colors!
+
+Version 1.01: 
+* Increased number of announcements from debug 5 back to 20.
+
+Version 1.0: 
+* This is the plugin that I want to be used. Suggestions can be taken on what to fix and what not to fix. Skipping beta because it works fine on my server and honestly if there are issues I'll just revert to beta.
+
+Version 0.1: 
+* Just hosting file on website. Majority of features are included but there are a few major bugs like if you enter out of range for commands, you will likely crash your server. Basically I wouldn't recommend using this unless you want to be VERY careful and are just plain desperate. 1.1 will have user controls to prevent this, interval adjustments, and more!
+
+* Note: Due to very minor bugs sometimes being present in past releases, I will update the version on the website but not the source code. If I deem the need great enough or just feel like "it's about time" to update the Source Code, I will upload again.
