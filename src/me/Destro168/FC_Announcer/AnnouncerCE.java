@@ -9,18 +9,19 @@ import me.Destro168.FC_Suite_Shared.ColorLib;
 import me.Destro168.Messaging.MessageLib;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.command.ColouredConsoleSender;
 import org.bukkit.entity.Player;
 
 public class AnnouncerCE implements CommandExecutor
 {
 	private FC_Announcer plugin;
-	Player playerSender;
-	MessageLib msgLib;
+	private MessageLib msgLib;
+	private ColouredConsoleSender console;
+	private Player player;
 	
 	public AnnouncerCE() { }
 	
@@ -28,13 +29,29 @@ public class AnnouncerCE implements CommandExecutor
     {
 		//Variable Declarations
 		plugin = FC_Announcer.plugin;
-		playerSender = (Player) sender;
-		msgLib = new MessageLib(playerSender);
 		boolean success = true;
 		ArgParser fap = new ArgParser(args_);
 		String arg0 = fap.getArg(0);
 		String arg1 = fap.getArg(1);
 		String arg2 = fap.getArg(2);
+		
+		if (sender instanceof Player)
+		{
+			player = (Player) sender;
+			console = null;
+			msgLib = new MessageLib(player);
+		}
+		else if (sender instanceof ColouredConsoleSender)
+		{
+			player = null;
+			console = (ColouredConsoleSender) sender;
+			msgLib = new MessageLib(console);
+		}
+		else
+		{
+			FC_Announcer.plugin.getLogger().info("Unknown command sender, returning announcer command.");
+			return false;
+		}
 		
 		//Check 1 argument commands.
 		if (arg0.equalsIgnoreCase("list"))
@@ -48,7 +65,12 @@ public class AnnouncerCE implements CommandExecutor
 		}
 		
 		if (arg0.equalsIgnoreCase("vert"))
-			return commandVert(playerSender);
+		{
+			if (player != null)
+				return commandVert(player);
+			else
+				return msgLib.standardMessage("This command can only be executed in-game.");
+		}
 		
 		//Check 2 argument commands.
 		if (arg1.equals(""))
@@ -64,7 +86,13 @@ public class AnnouncerCE implements CommandExecutor
 			else if (arg0.equalsIgnoreCase("set") || arg0.equalsIgnoreCase("create")) success = commandSet(fap);
 			else if (arg0.equalsIgnoreCase("delete") || arg0.equalsIgnoreCase("remove")) success = commandDelete(arg1, arg2);
 			else if (arg0.equalsIgnoreCase("interval") || arg0.equalsIgnoreCase("delay")) success = commandInterval(arg1, arg2);
-			else if (arg0.equalsIgnoreCase("zone")) success = commandZone(arg1, playerSender);
+			else if (arg0.equalsIgnoreCase("zone"))
+			{
+				if (player != null)
+					success = commandZone(arg1, player);
+				else
+					return msgLib.standardMessage("This command can only be executed in-game.");
+			}
 			else if (arg0.equalsIgnoreCase("help")) commandHelp();
 			else if (!arg0.equals("") && !arg1.equals("")) success = commandAnnounce(arg0, arg1);	//Check to see if they are using force command.
 			else success = false;
@@ -324,7 +352,6 @@ public class AnnouncerCE implements CommandExecutor
 		int listCounter = 0;
 		int intGroup;
 		ColorLib colorlib = new ColorLib();
-		MessageLib msgLib = new MessageLib(playerSender);
 		ConfigManager cm = new ConfigManager();
 		
 		
@@ -405,7 +432,7 @@ public class AnnouncerCE implements CommandExecutor
 			}
 			
 			//If no announcements none were listed, tell the player. This is ensure a given response if the player uses the command.
-			if (listCounter == 0) {	playerSender.sendMessage(ChatColor.DARK_GREEN + "There are currently no announcements stored in this group."); }
+			if (listCounter == 0) {	msgLib.standardMessage("There are currently no announcements stored in this group."); }
 		}
 	}
 	
@@ -513,8 +540,6 @@ public class AnnouncerCE implements CommandExecutor
 	//If the player sends /announcer help, display all commands.
 	public boolean commandHelp()
 	{
-		MessageLib msgLib = new MessageLib(playerSender);
-		
 		//Send help messages to the player
 		msgLib.standardHeader("Help for FC_Announcer!");
 		msgLib.standardMessage("/announcer delete [group] [line]","Delete A Groups Line.");

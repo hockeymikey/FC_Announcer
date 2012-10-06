@@ -5,6 +5,10 @@ import java.util.List;
 
 public class AnnouncementGroup extends AnnouncerFiles
 {
+	private int lineCount;
+	
+	public int getLineCount() { return lineCount; }
+	
 	public AnnouncementGroup() 
 	{
 		plugin = FC_Announcer.plugin;
@@ -23,6 +27,7 @@ public class AnnouncementGroup extends AnnouncerFiles
 		
 		setIsCreated(group, true);
 		setIsActive(group, true);
+		setPickRandomLines(group, false);
 		setInterval(group, 60);
 		
 		//Create a default world.
@@ -122,6 +127,9 @@ public class AnnouncementGroup extends AnnouncerFiles
 				checkEmptyAnnouncementGroup(group);
 			}
 			
+			//Update number of lines.
+			updateLineCount(group);
+			
 			//Return true for success.
 			return true;
 		}
@@ -171,6 +179,34 @@ public class AnnouncementGroup extends AnnouncerFiles
 		else
 			createNewAnnouncement(group, line, text);
 		
+		//Update number of lines.
+		updateLineCount(group);
+		
 		return true;
 	}
+	
+	//Returns a counter of nubmer of lines in an announcement group.
+	public void updateLineCount(int group)
+	{
+		//Reset line count
+		lineCount = 0;
+		
+		//Count number of lines.
+		for (int i = 0; i < LINE_GROUP_CAP; i++)
+		{
+			if (getLine(group, i) != null)
+				lineCount++;
+			else	//Since announcements are ordered, as soon as we get a null we can break.
+				break;
+		}
+	}
 }
+
+
+
+
+
+
+
+
+

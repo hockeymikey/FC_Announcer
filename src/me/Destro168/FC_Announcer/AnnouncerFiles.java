@@ -12,20 +12,19 @@ public class AnnouncerFiles
 	protected FC_Announcer plugin;
 	protected final int LINE_GROUP_CAP = 1000;
 	
+	//Gets
 	protected int getActiveAnnouncementCount() { return activeAnnouncementCount; }
 	protected String getLine(int x, int y) { config = plugin.getConfig(); return config.getString(announcerPrefix + x + "." + y); }
 	protected int getInterval(int x) { config = plugin.getConfig(); return config.getInt(announcerPrefix + x + ".interval"); }
 	protected boolean getIsActive(int x) { config = plugin.getConfig(); return config.getBoolean(announcerPrefix + x + ".isActive"); }
-	
 	protected boolean getIsCreated(int x) 
 	{
 		config = plugin.getConfig();
 		try { return config.getBoolean(announcerPrefix + x + ".isCreated"); }
 		catch (NullPointerException e) { return false; }
 	}
-	
+	protected boolean getPickRandomLines(int x) { config = plugin.getConfig(); return config.getBoolean(announcerPrefix + x + ".pickRandomLines"); }
 	protected List<String> getWorlds(int x) { config = plugin.getConfig(); return config.getStringList(announcerPrefix + x + ".worlds"); }
-	
 	protected double getX1(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".x1"); }
 	protected double getY1(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".y1"); }
 	protected double getZ1(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".z1"); }
@@ -33,9 +32,11 @@ public class AnnouncerFiles
 	protected double getY2(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".y2"); }
 	protected double getZ2(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".z2"); }
 	
+	//Sets
 	protected void setLine(int x, int y, String z) { config = plugin.getConfig(); config.set(announcerPrefix + x + "." + y, z); plugin.saveConfig(); rearrangeAnnouncements(x); }
 	protected void setInterval(int x, int y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".interval", y); plugin.saveConfig(); }
 	protected void setIsActive(int x, boolean y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".isActive", y); plugin.saveConfig(); }
+	protected void setPickRandomLines(int x, boolean y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".pickRandomLines", y); plugin.saveConfig(); }
 	protected void setIsCreated(int x, boolean y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".isCreated", y); plugin.saveConfig(); }
 	protected void setWorlds(int x, List<String> y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".worlds", y); plugin.saveConfig(); }
 	protected void setX1(int x, int y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".x1", y); plugin.saveConfig(); }
@@ -65,6 +66,7 @@ public class AnnouncerFiles
 		
 		config.set(newAnnounce + ".isCreated", config.get(old + ".isCreated"));
 		config.set(newAnnounce + ".isActive", config.get(old + ".isActive"));
+		config.set(newAnnounce + ".pickRandomLines", config.get(old + ".pickRandomLines"));
 		config.set(newAnnounce + ".interval", config.get(old + ".interval"));
 		
 		config.set(newAnnounce + ".x1", config.get(old + ".x1"));
@@ -92,6 +94,7 @@ public class AnnouncerFiles
 	
 	public void rearrangeAnnouncements(int startingPoint)
 	{
+		//Variable Declarations
 		String line = "";
 		String line2 = "";
 		

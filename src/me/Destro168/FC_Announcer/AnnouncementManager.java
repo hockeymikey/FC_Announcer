@@ -1,7 +1,9 @@
 package me.Destro168.FC_Announcer;
 
 import java.util.List;
+import java.util.Random;
 
+import me.Destro168.ConfigManagers.ConfigManager;
 import me.Destro168.FC_Suite_Shared.ColorLib;
 import me.Destro168.FC_Suite_Shared.LocationInsideAreaCheck;
 
@@ -41,15 +43,17 @@ public class AnnouncementManager
 		//Create the new announcement group.
 		ag = new AnnouncementGroup();
 		
-		
 		//Handle the configuration.
 		handleConfiguration();
 		
 		//Get the display announcements in console variable.
 		displayAnnouncementsInConsole = config.getBoolean("Setting.displayAnnouncementsInConsole");
 		
+		//Get config manager.
+		ConfigManager cm = new ConfigManager();
+		
 		//Set broadcast tag.
-		broadcastTag = config.getString("Setting.BroadcastTag");
+		broadcastTag = cm.broadcastTag;
 	}
 	
 	public void reload()
@@ -110,7 +114,11 @@ public class AnnouncementManager
 		//Create a final group to be broadcast.
 		final int currentGroup = group;
 		
+		//Cancel any past tasks.
 		Bukkit.getScheduler().cancelTask(taskID);
+		
+		//We update the line count for the group.
+		ag.updateLineCount(group);
 		
 		//Create the task and store the task id.
 		taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable()
@@ -119,7 +127,7 @@ public class AnnouncementManager
 			public void run() 
 			{
 				broadcastMessage(currentGroup);
-			}	
+			}
 		}, 0, ag.getInterval(group) * 20);
 		
 		//returns the taskID
@@ -138,9 +146,13 @@ public class AnnouncementManager
 		LocationInsideAreaCheck liac;
 		ColorLib colorLib = new ColorLib();
 		FC_AnnouncerPermissions perms;
+		Random rand = new Random();
 		
-		//Set our line.
-		line = ag.getLine(group, currentLine[group]);
+		//Set our line based on random order or fixed order.
+		if (ag.getPickRandomLines(group) == true)
+			line = ag.getLine(group, rand.nextInt(ag.getLineCount()));	//Random order
+		else
+			line = ag.getLine(group, currentLine[group]);	//Fixed order.
 		
 		//If our line is blank, then...
 		if (line == null || line.equals(""))
@@ -238,7 +250,7 @@ public class AnnouncementManager
 			//Set announcements to be displayed in the console.
 			config.set("Setting.displayAnnouncementsInConsole", true);
 			
-			//Remove outdated settings.
+			//Remove and update outdated settings if the old setting broadcastTag exists.
 			if (config.getString("BroadcastTag") != null)
 			{
 				//Transfer settings to new settings
@@ -263,14 +275,17 @@ public class AnnouncementManager
 			
 			//Create a new announcement if there is no announcement at 0,0
 			if (config.getString("Announcement." + 0 + "." + 0) == null)
-				ag.createNewAnnouncement(0, 0, "&bThis is the default FC_Announcer announcement! Type &3/announcer&b for help!");
+				ag.createNewAnnouncement(0, 0, "&6This is the default FC_Announcer announcement! Type &e/announcer&6 for help!");
 		}
 		
-		//Upgrade to 4.2
-		if (config.getDouble("Version") < 5.1)
+		//Upgrade to 5.2
+		if (config.getDouble("Version") < 5.2)
 		{
 			//Set the new version
-			config.set("Version", 5.1);
+			config.set("Version", 5.2);
+			
+			//Remove old broadcast tag.
+			config.set("Setting.BroadcastTag", null);
 		}
 		
 		//Save config
