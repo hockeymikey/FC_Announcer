@@ -288,6 +288,12 @@ public class AnnouncementManager
 			config.set("Setting.BroadcastTag", null);
 		}
 		
+		if (config.getDouble("Version") < 5.21)
+		{
+			//Set the new version
+			config.set("Version", 5.21);
+		}
+		
 		//Save config
 		plugin.saveConfig();
 	}

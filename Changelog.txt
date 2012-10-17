@@ -1,6 +1,11 @@
+Version 5.21:
+
+- Built CB release - Build #2377 - CB 1.3.2-R2.0
+- Even though this seems useless, the update to FC_Suite_Shared is included here which is good for plugin synchronization, also the free bump on the plugin listing doesn't hurt.
+
 Version 5.2:
 
-- Built on latest CB release - Build #2377 - CB 1.3.2-R1.0
+- Built CB release - Build #2377 - CB 1.3.2-R1.0
 - Added in new random ordering announcement group option, "PickRandomLines". Will make announcements appear in a random order. Managed to make it very optimized too imo.
 - Now using updated version of FC_Suite_Shared which adds a few new options and features. Check them out! Don't worry about the userinfo moving stuff in the FC_Suite_Shared changelog, that doesn't apply to this plugin.
 - Since I added "BroadcastTagText" to FC_Suite_Shared a while ago, the "BroadcastTag" setting in FC_Announcer is outdated and will automatically be removed. Use the BroadcastTagText in FC_Suite_Shared to set what you want your broadcast text to be.
