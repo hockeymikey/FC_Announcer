@@ -3,12 +3,13 @@ package me.Destro168.FC_Announcer;
 import java.util.List;
 import java.util.Random;
 
-import me.Destro168.ConfigManagers.ConfigManager;
 import me.Destro168.FC_Suite_Shared.ColorLib;
 import me.Destro168.FC_Suite_Shared.LocationInsideAreaCheck;
+import me.Destro168.FC_Suite_Shared.SuiteConfig;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -21,13 +22,11 @@ public class AnnouncementManager
 	private int[] currentLine;
 	private int[] tid;
 	private boolean displayAnnouncementsInConsole;
-	private String broadcastTag;
 	private int announcementCount;
+	private SuiteConfig cm = new SuiteConfig();
 	
 	//Functions
 	public void setTaskId(int x, int y) { tid[x] = y; }
-	
-	public String getBroadcastTag() { return broadcastTag; }
 	
 	public AnnouncementGroup getAnnouncementGroup() { return ag; }
 	public int getTaskId(int x) { return tid[x]; }
@@ -48,12 +47,6 @@ public class AnnouncementManager
 		
 		//Get the display announcements in console variable.
 		displayAnnouncementsInConsole = config.getBoolean("Setting.displayAnnouncementsInConsole");
-		
-		//Get config manager.
-		ConfigManager cm = new ConfigManager();
-		
-		//Set broadcast tag.
-		broadcastTag = cm.broadcastTag;
 	}
 	
 	public void reload()
@@ -178,7 +171,7 @@ public class AnnouncementManager
 			currentLine[group]++;
 			
 			//Set colors.
-			line = colorLib.parseColors(broadcastTag + line);
+			line = colorLib.parse(cm.broadcastTag + line);
 			
 			//Message the announcement to all players.
 			for (Player player: plugin.getServer().getOnlinePlayers()) 
@@ -288,13 +281,31 @@ public class AnnouncementManager
 			config.set("Setting.BroadcastTag", null);
 		}
 		
-		if (config.getDouble("Version") < 5.21)
+		if (config.getDouble("Version") < 5.3)
 		{
 			//Set the new version
-			config.set("Version", 5.21);
+			config.set("Version", 5.3);
+			config.set("Setting.zoneSelectionToolID", 280);
 		}
 		
 		//Save config
 		plugin.saveConfig();
 	}
+	
+	public Material getZoneSelectionMaterial()
+	{
+		return Material.getMaterial(config.getInt("Setting.zoneSelectionToolID"));
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+

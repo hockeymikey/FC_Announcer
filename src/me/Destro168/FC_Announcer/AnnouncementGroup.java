@@ -3,7 +3,7 @@ package me.Destro168.FC_Announcer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnnouncementGroup extends AnnouncerFiles
+public class AnnouncementGroup extends AnnouncementFiles
 {
 	private int lineCount;
 	

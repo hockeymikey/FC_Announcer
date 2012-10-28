@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-public class AnnouncerFiles 
+public class AnnouncementFiles 
 {
 	private int activeAnnouncementCount;
 	private FileConfiguration config;

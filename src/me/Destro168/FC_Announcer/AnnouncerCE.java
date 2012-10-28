@@ -3,9 +3,10 @@ package me.Destro168.FC_Announcer;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.Destro168.ConfigManagers.ConfigManager;
 import me.Destro168.FC_Suite_Shared.ArgParser;
 import me.Destro168.FC_Suite_Shared.ColorLib;
+import me.Destro168.FC_Suite_Shared.SuiteConfig;
+import me.Destro168.Messaging.BroadcastLib;
 import me.Destro168.Messaging.MessageLib;
 
 import org.bukkit.Bukkit;
@@ -67,7 +68,7 @@ public class AnnouncerCE implements CommandExecutor
 		if (arg0.equalsIgnoreCase("vert"))
 		{
 			if (player != null)
-				return commandVert(player);
+				return FC_Announcer.sv.expandVert(player);
 			else
 				return msgLib.standardMessage("This command can only be executed in-game.");
 		}
@@ -110,7 +111,7 @@ public class AnnouncerCE implements CommandExecutor
 		//Variable declarations
 		int intArg1 = 0;
 		int intArg2 = 0;
-		ColorLib colorLib = new ColorLib();
+		BroadcastLib bLib = new BroadcastLib();
 		
 		//We attempt to format the string to numbers.
 		try
@@ -127,9 +128,10 @@ public class AnnouncerCE implements CommandExecutor
 		if (FC_Announcer.am.getAnnouncementGroup().getIsCreated(intArg1) == false)
 			return false;
 		
+		
 		//We make sure the line isn't null before announcing.
 		if (FC_Announcer.am.getAnnouncementGroup().getLine(intArg1, intArg2) != null)
-			Bukkit.getServer().broadcastMessage(colorLib.parseColors(FC_Announcer.am.getBroadcastTag() + FC_Announcer.am.getAnnouncementGroup().getLine(intArg1, intArg2)));
+			bLib.standardBroadcast(FC_Announcer.am.getAnnouncementGroup().getLine(intArg1, intArg2));
 		else
 			return false;
 		
@@ -352,8 +354,7 @@ public class AnnouncerCE implements CommandExecutor
 		int listCounter = 0;
 		int intGroup;
 		ColorLib colorlib = new ColorLib();
-		ConfigManager cm = new ConfigManager();
-		
+		SuiteConfig cm = new SuiteConfig();
 		
 		//If the user enters in "groups", then display all groups that are active.
 		if (group.equals("groups"))
@@ -423,7 +424,7 @@ public class AnnouncerCE implements CommandExecutor
 						message += "Off";
 					
 					message += cm.primaryColor + "] [" + cm.secondaryColor + FC_Announcer.am.getAnnouncementGroup().getInterval(intGroup) +
-							cm.primaryColor + "] - " + cm.secondaryColor + colorlib.parseColors(line);
+							cm.primaryColor + "] - " + cm.secondaryColor + colorlib.parse(line);
 					
 					msgLib.standardMessage(message);
 					
@@ -491,50 +492,22 @@ public class AnnouncerCE implements CommandExecutor
 			return false;
 		}
 		
-		if (FC_Announcer.block1Location.containsKey(player) && FC_Announcer.block2Location.containsKey(player))
-		{
-			loc1 = FC_Announcer.block1Location.get(player);
-			loc2 = FC_Announcer.block2Location.get(player);
-			
-			FC_Announcer.am.getAnnouncementGroup().setAnnouncementZone(inputGroup,
-				(int) loc1.getX(),
-				(int) loc1.getY(),
-				(int) loc1.getZ(),
-				(int) loc2.getX(),
-				(int) loc2.getY(),
-				(int) loc2.getZ()
-			);
-			
-			return msgLib.successCommand();
-		}
-		else
-		{
-			msgLib.standardError("Define zones first.");
-		}
+		loc1 = FC_Announcer.sv.getBlockLoc1(player);
+		loc2 = FC_Announcer.sv.getBlockLoc2(player);
 		
-		return true;
-	}
-	
-	public boolean commandVert(Player player)
-	{
-		//Variable Declarations
-		Location loc1;
-		Location loc2;
+		if (loc1 == null || loc2 == null)
+			return msgLib.errorInvalidSelection();
 		
-		if (FC_Announcer.block1Location.containsKey(player) && FC_Announcer.block2Location.containsKey(player))
-		{
-			loc1 = FC_Announcer.block1Location.get(player);
-			loc1.setY(0);
-			FC_Announcer.block1Location.put(player, loc1);
-			
-			loc2 = FC_Announcer.block2Location.get(player);
-			loc2.setY(999);
-			FC_Announcer.block2Location.put(player, loc2);
-			
-			return msgLib.successCommand();
-		}
-		else
-			return false;
+		FC_Announcer.am.getAnnouncementGroup().setAnnouncementZone(inputGroup,
+			(int) loc1.getX(),
+			(int) loc1.getY(),
+			(int) loc1.getZ(),
+			(int) loc2.getX(),
+			(int) loc2.getY(),
+			(int) loc2.getZ()
+		);
+		
+		return msgLib.successCommand();
 	}
 	
 	//If the player sends /announcer help, display all commands.
