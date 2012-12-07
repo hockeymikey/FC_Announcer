@@ -3,8 +3,7 @@
 Thank you for downloading the FC_Announcer plugin created by Destro168. 
 
 Bukkit Dev Page -> http://dev.bukkit.org/server-mods/fc_announcer/
-FC_Announcer Changelog & Source -> https://github.com/Destro168/FC_Announcer/blob/master/Changelog.txt
-FC_Suite_Shared Changelog & Source -> https://github.com/Destro168/FC_Suite_Shared/blob/master/Changelog.txt
+FC_Announcer Changelog & Source -> https://github.com/Destro168/FC_Announcer/blob/master/Docs/Changelog
 
 Description:
 FC_Announcer is a highly advanced automatic announcing announcer/broadcast plugin that grants absolute mastery over automatic server announcements. By using FC_Announcer, one is able to create announcements that are viewable only by members with the correct permissions and/or in the proper zone. This control, allows you to create announcements targeting specific groups of players with specific announcements.
