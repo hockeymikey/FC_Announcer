@@ -13,25 +13,26 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-public class AnnouncementManager
+public class SettingsManager
 {
 	//Variable Declarations
 	private FileConfiguration config;
 	private FC_Announcer plugin;
 	private AnnouncementGroup ag;
+	private SuiteConfig suiteconfig = new SuiteConfig();
 	private int[] currentLine;
 	private int[] tid;
 	private boolean displayAnnouncementsInConsole;
 	private int announcementCount;
-	private SuiteConfig cm = new SuiteConfig();
 	
-	//Functions
+	//Set
 	public void setTaskId(int x, int y) { tid[x] = y; }
 	
+	//Gets
 	public AnnouncementGroup getAnnouncementGroup() { return ag; }
 	public int getTaskId(int x) { return tid[x]; }
 	
-	public AnnouncementManager()
+	public SettingsManager()
 	{
 		//Store plugin
 		plugin = FC_Announcer.plugin;
@@ -43,16 +44,97 @@ public class AnnouncementManager
 		ag = new AnnouncementGroup();
 		
 		//Handle the configuration.
-		handleConfiguration();
+		handleConfig();
 		
 		//Get the display announcements in console variable.
 		displayAnnouncementsInConsole = config.getBoolean("Setting.displayAnnouncementsInConsole");
 	}
 	
+	public double getVersion() { return config.getDouble("Version"); }
+	
+	//Basically creates default settings for when the plugin first runs.
+	public void handleConfig()
+	{
+		//Get configuration file
+		FileConfiguration config = plugin.getConfig();
+		
+		//Update config files to 4.0
+		if (getVersion() < 4.0)
+		{
+			//Header for configuration file
+			config.options().header("These are configuration variables");
+			
+			//Set the new version
+			config.set("Version", 4.0);
+			
+			//Set default broadcaster tag.
+			config.set("Settings.BroadcastTag", "&b[&3FC_Announcer&b]&f ");
+			
+			//Enable the feature automatic enable.
+			config.set("Settings.autoEnable", true);
+			
+			//Set announcements to be displayed in the console.
+			config.set("Settings.displayAnnouncementsInConsole", true);
+			
+			//Remove and update outdated settings if the old setting broadcastTag exists.
+			if (config.getString("BroadcastTag") != null)
+			{
+				//Transfer settings to new settings
+				config.set("Settings.BroadcastTag", config.getString("BroadcastTag"));
+				config.set("Settings.autoEnable", config.getBoolean("autoEnable"));
+				config.set("Settings.displayAnnouncementsInConsole", config.getBoolean("displayAnnouncementsInConsole"));
+				
+				//Set old settings to null
+				config.set("configCreated", null);
+				config.set("version", null);
+				config.set("BroadcastTag", null);
+				config.set("autoEnable", null);
+				config.set("displayAnnouncementsInConsole", null);
+				
+				//Remove total lines from all announcement groups.
+				for (int i = 0; i < 1000; i++)
+				{
+					if (config.getBoolean("Announcement." + i + ".isCreated") == true)
+						config.set("Announcement." + i + ".totalLines", null);
+				}
+			}
+			
+			//Create a new announcement if there is no announcement at 0,0
+			if (config.getString("Announcement." + 0 + "." + 0) == null)
+				ag.createNewAnnouncement(0, 0, "&6This is the default FC_Announcer announcement! Type &e/announcer&6 for help!");
+		}
+		
+		//Upgrade to 5.2
+		if (getVersion() < 5.2)
+		{
+			//Set the new version
+			config.set("Version", 5.2);
+			
+			//Remove old broadcast tag.
+			config.set("Settings.BroadcastTag", null);
+		}
+		
+		if (getVersion() < 5.3)
+		{
+			//Set the new version
+			config.set("Version", 5.3);
+			config.set("Settings.zoneSelectionToolID", 280);
+		}
+		
+		if (getVersion() < 5.4)
+		{
+			//Set the new version
+			config.set("Version", 5.4);
+		}
+		
+		//Save config
+		plugin.saveConfig();
+	}
+	
 	public void reload()
 	{
 		//Handle AutoAnnounce if the option is enabled.
-		if (config.getBoolean("Setting.autoEnable") == true)
+		if (config.getBoolean("Settings.autoEnable") == true)
 			ag.autoEnable();
 		
 		//Count active announcements.
@@ -171,7 +253,7 @@ public class AnnouncementManager
 			currentLine[group]++;
 			
 			//Set colors.
-			line = colorLib.parse(cm.broadcastTag + line);
+			line = colorLib.parse(suiteconfig.broadcastTag + line);
 			
 			//Message the announcement to all players.
 			for (Player player: plugin.getServer().getOnlinePlayers()) 
@@ -219,82 +301,9 @@ public class AnnouncementManager
 		}
 	}
 	
-	//Basically creates default settings for when the plugin first runs.
-	public void handleConfiguration()
-	{
-		//Get configuration file
-		FileConfiguration config = plugin.getConfig();
-		
-		//Update config files to 4.0
-		if (config.getDouble("Version") < 4.0)
-		{
-			//Header for configuration file
-			config.options().header("These are configuration variables");
-			
-			//Set the new version
-			config.set("Version", 4.0);
-			
-			//Set default broadcaster tag.
-			config.set("Setting.BroadcastTag", "&b[&3FC_Announcer&b]&f ");
-			
-			//Enable the feature automatic enable.
-			config.set("Setting.autoEnable", true);
-			
-			//Set announcements to be displayed in the console.
-			config.set("Setting.displayAnnouncementsInConsole", true);
-			
-			//Remove and update outdated settings if the old setting broadcastTag exists.
-			if (config.getString("BroadcastTag") != null)
-			{
-				//Transfer settings to new settings
-				config.set("Setting.BroadcastTag", config.getString("BroadcastTag"));
-				config.set("Setting.autoEnable", config.getBoolean("autoEnable"));
-				config.set("Setting.displayAnnouncementsInConsole", config.getBoolean("displayAnnouncementsInConsole"));
-				
-				//Set old settings to null
-				config.set("configCreated", null);
-				config.set("version", null);
-				config.set("BroadcastTag", null);
-				config.set("autoEnable", null);
-				config.set("displayAnnouncementsInConsole", null);
-				
-				//Remove total lines from all announcement groups.
-				for (int i = 0; i < 1000; i++)
-				{
-					if (config.getBoolean("Announcement." + i + ".isCreated") == true)
-						config.set("Announcement." + i + ".totalLines", null);
-				}
-			}
-			
-			//Create a new announcement if there is no announcement at 0,0
-			if (config.getString("Announcement." + 0 + "." + 0) == null)
-				ag.createNewAnnouncement(0, 0, "&6This is the default FC_Announcer announcement! Type &e/announcer&6 for help!");
-		}
-		
-		//Upgrade to 5.2
-		if (config.getDouble("Version") < 5.2)
-		{
-			//Set the new version
-			config.set("Version", 5.2);
-			
-			//Remove old broadcast tag.
-			config.set("Setting.BroadcastTag", null);
-		}
-		
-		if (config.getDouble("Version") < 5.3)
-		{
-			//Set the new version
-			config.set("Version", 5.3);
-			config.set("Setting.zoneSelectionToolID", 280);
-		}
-		
-		//Save config
-		plugin.saveConfig();
-	}
-	
 	public Material getZoneSelectionMaterial()
 	{
-		return Material.getMaterial(config.getInt("Setting.zoneSelectionToolID"));
+		return Material.getMaterial(config.getInt("Settings.zoneSelectionToolID"));
 	}
 }
 

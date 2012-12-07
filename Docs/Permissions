@@ -1,0 +1,5 @@
+~ FC_Announcer Permissions ~
+
+FC_Announcer.admin -> Allows you to use FC_Announcer commands.
+FC_Announcer.view.[x] -> Allows a group to view an announcement group specified by '[x]'. Put whichever announcement group you want players to see as a substitute for '[x]'.
+FC_Announcer.ignore.[x] -> Negates the view command for specified announcement group.

@@ -14,7 +14,7 @@ public class FC_Announcer extends JavaPlugin
 {	
 	//Variables
 	public final static int minimumAnnouncementLength = 1;
-	public static AnnouncementManager am;
+	public static SettingsManager settingsManager;
 	public static SelectionVector sv;
     public static FC_Announcer plugin;
     
@@ -33,7 +33,7 @@ public class FC_Announcer extends JavaPlugin
 		plugin = this;
 		
 		//Variable initializations
-		am = new AnnouncementManager();
+		settingsManager = new SettingsManager();
 		sv = new SelectionVector();
 		
 		//Create listener for /announcer
@@ -44,12 +44,12 @@ public class FC_Announcer extends JavaPlugin
 		getServer().getPluginManager().registerEvents(new PlayerInteractionListener(), this);
 		
 		//Delay start by 1 second to give breathing room for permissions.
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(this, new Runnable()
+		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable()
 		{
 			public void run()
 			{
 				//Perform a reload
-				am.reload();
+				settingsManager.reload();
 			}
 		}, 20);
 		
@@ -73,7 +73,7 @@ public class FC_Announcer extends JavaPlugin
 				return;
 			
 			//If not using a stick return.
-			if (!player.getItemInHand().getType().equals(FC_Announcer.am.getZoneSelectionMaterial()))
+			if (!player.getItemInHand().getType().equals(FC_Announcer.settingsManager.getZoneSelectionMaterial()))
 				return;
 			
 			if (event.getAction() == Action.LEFT_CLICK_BLOCK)

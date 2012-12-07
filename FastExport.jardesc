@@ -11,11 +11,10 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
-        <file path="/FC_Announcer/Changelog.txt"/>
-        <file path="/FC_Announcer/plugin.yml"/>
         <file path="/FC_Announcer/.classpath"/>
-        <file path="/FC_Announcer/FastExport.jardesc"/>
+        <file path="/FC_Announcer/plugin.yml"/>
         <file path="/FC_Announcer/.project"/>
         <javaElement handleIdentifier="=FC_Announcer/src"/>
+        <file path="/FC_Announcer/FastExport.jardesc"/>
     </selectedElements>
 </jardesc>

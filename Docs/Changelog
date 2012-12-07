@@ -1,3 +1,15 @@
+~ FC_Announcer Changelog ~
+
+Version 5.4
+
+General:
+- Updated file access to use FC_Suite_Shared classes.
+- Setting renamed to "Settings" with an s. To update put an s at the end of Settings. I had to make the change, it was bugging me for too long. :)
+- This version being release mainly for compatibility with FC_Suite_Shared 2.0
+
+Installation:
+- FC_Suite_Shared is now it's own seperate plugin! Check it out -> http://dev.bukkit.org/server-mods/fc_suite_shared/
+
 Version 5.3:
 
 - Updated the functionality involving the wand for zones. Now you will be able to left-right click to define the zone. As well, the tool is customizable with the new field, "zoneSelectionToolID". Moved the selection code to a selection vector class in FC_Suite_Shared for use with FC_Rpg as well. Enjoy!

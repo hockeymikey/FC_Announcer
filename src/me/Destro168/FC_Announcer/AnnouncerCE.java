@@ -6,8 +6,8 @@ import java.util.List;
 import me.Destro168.FC_Suite_Shared.ArgParser;
 import me.Destro168.FC_Suite_Shared.ColorLib;
 import me.Destro168.FC_Suite_Shared.SuiteConfig;
-import me.Destro168.Messaging.BroadcastLib;
-import me.Destro168.Messaging.MessageLib;
+import me.Destro168.FC_Suite_Shared.Messaging.BroadcastLib;
+import me.Destro168.FC_Suite_Shared.Messaging.MessageLib;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -125,13 +125,13 @@ public class AnnouncerCE implements CommandExecutor
 		}
 		
 		//We check if it is created first.
-		if (FC_Announcer.am.getAnnouncementGroup().getIsCreated(intArg1) == false)
+		if (FC_Announcer.settingsManager.getAnnouncementGroup().getIsCreated(intArg1) == false)
 			return false;
 		
 		
 		//We make sure the line isn't null before announcing.
-		if (FC_Announcer.am.getAnnouncementGroup().getLine(intArg1, intArg2) != null)
-			bLib.standardBroadcast(FC_Announcer.am.getAnnouncementGroup().getLine(intArg1, intArg2));
+		if (FC_Announcer.settingsManager.getAnnouncementGroup().getLine(intArg1, intArg2) != null)
+			bLib.standardBroadcast(FC_Announcer.settingsManager.getAnnouncementGroup().getLine(intArg1, intArg2));
 		else
 			return false;
 		
@@ -160,22 +160,22 @@ public class AnnouncerCE implements CommandExecutor
 			Bukkit.getScheduler().cancelTasks(plugin);
 			
 			//For all groups, iterate through as i.
-			for (int i = 0; i < FC_Announcer.am.getAnnouncementGroup().getActiveAnnouncementCount(); i++)
+			for (int i = 0; i < FC_Announcer.settingsManager.getAnnouncementGroup().getActiveAnnouncementCount(); i++)
 			{	
 				//Set the group to no longer recieve announcements.
-				FC_Announcer.am.getAnnouncementGroup().setIsActive(i, false);
+				FC_Announcer.settingsManager.getAnnouncementGroup().setIsActive(i, false);
 			}
 		}
 		else 
 		{
 			//If the announcement is active
-			if (FC_Announcer.am.getAnnouncementGroup().getIsActive(inputGroup) == true)
+			if (FC_Announcer.settingsManager.getAnnouncementGroup().getIsActive(inputGroup) == true)
 			{
 				//Cancel the announcement task.
-				Bukkit.getServer().getScheduler().cancelTask(FC_Announcer.am.getTaskId(inputGroup));
+				Bukkit.getServer().getScheduler().cancelTask(FC_Announcer.settingsManager.getTaskId(inputGroup));
 				
 				//Set the group to no longer recieve announcements. 
-				FC_Announcer.am.getAnnouncementGroup().setIsActive(inputGroup, false);
+				FC_Announcer.settingsManager.getAnnouncementGroup().setIsActive(inputGroup, false);
 			}
 			else
 				return false;
@@ -204,28 +204,28 @@ public class AnnouncerCE implements CommandExecutor
 		if (group.equalsIgnoreCase("all"))
 		{
 			//For all groups, iterate through as i.
-			for (int i = 0; i < FC_Announcer.am.getAnnouncementGroup().getActiveAnnouncementCount(); i++)
+			for (int i = 0; i < FC_Announcer.settingsManager.getAnnouncementGroup().getActiveAnnouncementCount(); i++)
 			{	
 				//Set the group to recieve announcements.
-				FC_Announcer.am.getAnnouncementGroup().setIsActive(i, true);
+				FC_Announcer.settingsManager.getAnnouncementGroup().setIsActive(i, true);
 
 				//Start all announcements for all groups.
-				FC_Announcer.am.setTaskId(i, FC_Announcer.am.startAnnouncement(FC_Announcer.am.getTaskId(i), i));
+				FC_Announcer.settingsManager.setTaskId(i, FC_Announcer.settingsManager.startAnnouncement(FC_Announcer.settingsManager.getTaskId(i), i));
 			}
 		}
 		else
 		{
 			//If the announcement is inactive
-			if (FC_Announcer.am.getAnnouncementGroup().getIsActive(inputGroup) == false)
+			if (FC_Announcer.settingsManager.getAnnouncementGroup().getIsActive(inputGroup) == false)
 			{
 				//Set the group to recieve announcements.
-				FC_Announcer.am.getAnnouncementGroup().setIsActive(inputGroup, true);
+				FC_Announcer.settingsManager.getAnnouncementGroup().setIsActive(inputGroup, true);
 				
 				//Start announcement.
-				newAnnouncementTaskId = FC_Announcer.am.startAnnouncement(FC_Announcer.am.getTaskId(inputGroup), inputGroup);
+				newAnnouncementTaskId = FC_Announcer.settingsManager.startAnnouncement(FC_Announcer.settingsManager.getTaskId(inputGroup), inputGroup);
 				
 				//Store task id.
-				FC_Announcer.am.setTaskId(inputGroup, newAnnouncementTaskId);
+				FC_Announcer.settingsManager.setTaskId(inputGroup, newAnnouncementTaskId);
 			}
 			else
 			{
@@ -270,7 +270,7 @@ public class AnnouncerCE implements CommandExecutor
 		message = args.getFinalArg();
 		
 		//Set the announcement line to the one specified.
-		if (FC_Announcer.am.getAnnouncementGroup().setLine(message, group, line) == true)
+		if (FC_Announcer.settingsManager.getAnnouncementGroup().setLine(message, group, line) == true)
 			msgLib.successCommand();	//Give the player feedback
 		else
 		{
@@ -279,7 +279,7 @@ public class AnnouncerCE implements CommandExecutor
 		}
 		
 		//Reload announcements.
-		FC_Announcer.am.reload();
+		FC_Announcer.settingsManager.reload();
 		
 		return true;
 	}
@@ -309,7 +309,7 @@ public class AnnouncerCE implements CommandExecutor
 		}
 		
 		//Store the worlds list again.
-		FC_Announcer.am.getAnnouncementGroup().setWorlds(intGroup, worlds);
+		FC_Announcer.settingsManager.getAnnouncementGroup().setWorlds(intGroup, worlds);
 		
 		//Return success.
 		return msgLib.successCommand();
@@ -319,8 +319,8 @@ public class AnnouncerCE implements CommandExecutor
 	public boolean commandDeleteAll()
 	{
 		//Clear all announcement groups.
-		for (int i = 0; i < FC_Announcer.am.getAnnouncementGroup().getActiveAnnouncementCount(); i++) 
-			FC_Announcer.am.getAnnouncementGroup().clearAnnouncement(i);
+		for (int i = 0; i < FC_Announcer.settingsManager.getAnnouncementGroup().getActiveAnnouncementCount(); i++) 
+			FC_Announcer.settingsManager.getAnnouncementGroup().clearAnnouncement(i);
 
 		return true;
 	}
@@ -331,7 +331,7 @@ public class AnnouncerCE implements CommandExecutor
 		//Delete specified announcement and line
 		try
 		{
-			FC_Announcer.am.getAnnouncementGroup().clearLine(Integer.parseInt(group), Integer.parseInt(line));
+			FC_Announcer.settingsManager.getAnnouncementGroup().clearLine(Integer.parseInt(group), Integer.parseInt(line));
 		}
 		catch (NumberFormatException e)
 		{
@@ -339,7 +339,7 @@ public class AnnouncerCE implements CommandExecutor
 		}
 		
 		//Restart the announcements
-		FC_Announcer.am.reload();
+		FC_Announcer.settingsManager.reload();
 		
 		//Send feedback
 		return msgLib.successCommand();
@@ -362,24 +362,24 @@ public class AnnouncerCE implements CommandExecutor
 			msgLib.standardHeader("Announcement Groups");
 			
 			//Display all announcements
-			for (int i = 0; i != FC_Announcer.am.getAnnouncementGroup().getActiveAnnouncementCount(); i++) 
+			for (int i = 0; i != FC_Announcer.settingsManager.getAnnouncementGroup().getActiveAnnouncementCount(); i++) 
 			{
 				//Add the group number.
 				message = "Group " + cm.primaryColor + "[" + cm.secondaryColor + String.valueOf(i) + cm.primaryColor + "/" + cm.secondaryColor;
 				
 				//Add whether active or not.
-				if (FC_Announcer.am.getAnnouncementGroup().getIsActive(i) == true)
+				if (FC_Announcer.settingsManager.getAnnouncementGroup().getIsActive(i) == true)
 					message = message + "Enabled";
 				else
 					message = message + "Disabled (inactive)";
 				
 				//Add the interval.
-				message = message + cm.primaryColor + "] - Interval [" + cm.secondaryColor + FC_Announcer.am.getAnnouncementGroup().getInterval(i) + cm.primaryColor + "]";
+				message = message + cm.primaryColor + "] - Interval [" + cm.secondaryColor + FC_Announcer.settingsManager.getAnnouncementGroup().getInterval(i) + cm.primaryColor + "]";
 				
 				//Add the worlds
 				message = message + cm.primaryColor + " - Worlds ";
 				
-				for (String worldName : FC_Announcer.am.getAnnouncementGroup().getWorlds(i))
+				for (String worldName : FC_Announcer.settingsManager.getAnnouncementGroup().getWorlds(i))
 					message = message + "[" + cm.secondaryColor + worldName + cm.primaryColor + "] ";
 				
 				//Send the message
@@ -397,7 +397,7 @@ public class AnnouncerCE implements CommandExecutor
 				intGroup = Integer.parseInt(group);
 				
 				//Make sure input is in range.
-				if ((intGroup > FC_Announcer.am.getAnnouncementGroup().LINE_GROUP_CAP) || (intGroup < 0))
+				if ((intGroup > FC_Announcer.settingsManager.getAnnouncementGroup().LINE_GROUP_CAP) || (intGroup < 0))
 					return;
 			}
 			catch (NumberFormatException e)
@@ -407,10 +407,10 @@ public class AnnouncerCE implements CommandExecutor
 			}
 			
 			//Display all announcements
-			for (int i = 0; i != FC_Announcer.am.getAnnouncementGroup().LINE_GROUP_CAP; i++) 
+			for (int i = 0; i != FC_Announcer.settingsManager.getAnnouncementGroup().LINE_GROUP_CAP; i++) 
 			{
 				//Store announcement in "message" and then send it to the player.
-				line = FC_Announcer.am.getAnnouncementGroup().getLine(intGroup, i);
+				line = FC_Announcer.settingsManager.getAnnouncementGroup().getLine(intGroup, i);
 				
 				//Do a check to make sure the announcement actually has words before listing.
 				if ((line != null) && !(line.equals("")) && !(line.equals("null")))
@@ -418,12 +418,12 @@ public class AnnouncerCE implements CommandExecutor
 					//Add all the prefixy stuff.
 					message = "Line #" + cm.secondaryColor + String.valueOf(i) + cm.primaryColor + " - [" + cm.secondaryColor + "";
 					
-					if (FC_Announcer.am.getAnnouncementGroup().getIsActive(intGroup) == true)
+					if (FC_Announcer.settingsManager.getAnnouncementGroup().getIsActive(intGroup) == true)
 						message += "On";
 					else
 						message += "Off";
 					
-					message += cm.primaryColor + "] [" + cm.secondaryColor + FC_Announcer.am.getAnnouncementGroup().getInterval(intGroup) +
+					message += cm.primaryColor + "] [" + cm.secondaryColor + FC_Announcer.settingsManager.getAnnouncementGroup().getInterval(intGroup) +
 							cm.primaryColor + "] - " + cm.secondaryColor + colorlib.parse(line);
 					
 					msgLib.standardMessage(message);
@@ -456,17 +456,17 @@ public class AnnouncerCE implements CommandExecutor
 		}
 		
 		//Make sure input is in range.
-		if ((intGroup > FC_Announcer.am.getAnnouncementGroup().LINE_GROUP_CAP) || (intGroup < 0))
+		if ((intGroup > FC_Announcer.settingsManager.getAnnouncementGroup().LINE_GROUP_CAP) || (intGroup < 0))
 			return false;
 		
 		if (intInterval > 0)
 		{
-			FC_Announcer.am.getAnnouncementGroup().setInterval(intGroup, intInterval);
+			FC_Announcer.settingsManager.getAnnouncementGroup().setInterval(intGroup, intInterval);
 			
 			//Send feedback
 			msgLib.successCommand();
 			
-			FC_Announcer.am.reload();
+			FC_Announcer.settingsManager.reload();
 			
 			return true;
 		}
@@ -498,7 +498,7 @@ public class AnnouncerCE implements CommandExecutor
 		if (loc1 == null || loc2 == null)
 			return msgLib.errorInvalidSelection();
 		
-		FC_Announcer.am.getAnnouncementGroup().setAnnouncementZone(inputGroup,
+		FC_Announcer.settingsManager.getAnnouncementGroup().setAnnouncementZone(inputGroup,
 			(int) loc1.getX(),
 			(int) loc1.getY(),
 			(int) loc1.getZ(),

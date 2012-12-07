@@ -2,54 +2,52 @@ package me.Destro168.FC_Announcer;
 
 import java.util.List;
 
-import org.bukkit.configuration.file.FileConfiguration;
+import me.Destro168.FC_Suite_Shared.ConfigManagers.FileConfigurationWrapper;
 
-public class AnnouncementFiles 
+public class AnnouncementFiles
 {
+	public final int LINE_GROUP_CAP = 1000;
+	
 	private int activeAnnouncementCount;
-	private FileConfiguration config;
 	private final String announcerPrefix = "Announcement.";
-	protected FC_Announcer plugin;
-	protected final int LINE_GROUP_CAP = 1000;
+	public FC_Announcer plugin;
+	public FileConfigurationWrapper fcw;
 	
 	//Gets
-	protected int getActiveAnnouncementCount() { return activeAnnouncementCount; }
-	protected String getLine(int x, int y) { config = plugin.getConfig(); return config.getString(announcerPrefix + x + "." + y); }
-	protected int getInterval(int x) { config = plugin.getConfig(); return config.getInt(announcerPrefix + x + ".interval"); }
-	protected boolean getIsActive(int x) { config = plugin.getConfig(); return config.getBoolean(announcerPrefix + x + ".isActive"); }
-	protected boolean getIsCreated(int x) 
-	{
-		config = plugin.getConfig();
-		try { return config.getBoolean(announcerPrefix + x + ".isCreated"); }
-		catch (NullPointerException e) { return false; }
-	}
-	protected boolean getPickRandomLines(int x) { config = plugin.getConfig(); return config.getBoolean(announcerPrefix + x + ".pickRandomLines"); }
-	protected List<String> getWorlds(int x) { config = plugin.getConfig(); return config.getStringList(announcerPrefix + x + ".worlds"); }
-	protected double getX1(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".x1"); }
-	protected double getY1(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".y1"); }
-	protected double getZ1(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".z1"); }
-	protected double getX2(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".x2"); }
-	protected double getY2(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".y2"); }
-	protected double getZ2(int group) { config = plugin.getConfig(); return config.getInt(announcerPrefix + group + ".z2"); }
+	public int getActiveAnnouncementCount() { return activeAnnouncementCount; }
+	public String getLine(int x, int y) { return fcw.getString(announcerPrefix + x + "." + y); }
+	public int getInterval(int x) { return fcw.getInt(announcerPrefix + x + ".interval"); }
+	public boolean getIsActive(int x) { return fcw.getBoolean(announcerPrefix + x + ".isActive"); }
+	public boolean getIsCreated(int x) { try { return fcw.getBoolean(announcerPrefix + x + ".isCreated"); } catch (NullPointerException e) { return false; } }
+	public boolean getPickRandomLines(int x) { return fcw.getBoolean(announcerPrefix + x + ".pickRandomLines"); }
+	public List<String> getWorlds(int x) { return fcw.getStringList(announcerPrefix + x + ".worlds"); }
+	public double getX1(int group) { return fcw.getInt(announcerPrefix + group + ".x1"); }
+	public double getY1(int group) { return fcw.getInt(announcerPrefix + group + ".y1"); }
+	public double getZ1(int group) { return fcw.getInt(announcerPrefix + group + ".z1"); }
+	public double getX2(int group) { return fcw.getInt(announcerPrefix + group + ".x2"); }
+	public double getY2(int group) { return fcw.getInt(announcerPrefix + group + ".y2"); }
+	public double getZ2(int group) { return fcw.getInt(announcerPrefix + group + ".z2"); }
 	
 	//Sets
-	protected void setLine(int x, int y, String z) { config = plugin.getConfig(); config.set(announcerPrefix + x + "." + y, z); plugin.saveConfig(); rearrangeAnnouncements(x); }
-	protected void setInterval(int x, int y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".interval", y); plugin.saveConfig(); }
-	protected void setIsActive(int x, boolean y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".isActive", y); plugin.saveConfig(); }
-	protected void setPickRandomLines(int x, boolean y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".pickRandomLines", y); plugin.saveConfig(); }
-	protected void setIsCreated(int x, boolean y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".isCreated", y); plugin.saveConfig(); }
-	protected void setWorlds(int x, List<String> y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".worlds", y); plugin.saveConfig(); }
-	protected void setX1(int x, int y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".x1", y); plugin.saveConfig(); }
-	protected void setY1(int x, int y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".y1", y); plugin.saveConfig(); }
-	protected void setZ1(int x, int y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".z1", y); plugin.saveConfig(); }
-	protected void setX2(int x, int y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".x2", y); plugin.saveConfig(); }
-	protected void setY2(int x, int y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".y2", y); plugin.saveConfig(); }
-	protected void setZ2(int x, int y) { config = plugin.getConfig(); config.set(announcerPrefix + x + ".z2", y); plugin.saveConfig(); }
+	public void setLine(int x, int y, String z) { fcw.set(announcerPrefix + x + "." + y, z); rearrangeAnnouncements(x); }
+	public void setInterval(int x, int y) { fcw.set(announcerPrefix + x + ".interval", y); }
+	public void setIsActive(int x, boolean y) { fcw.set(announcerPrefix + x + ".isActive", y); }
+	public void setPickRandomLines(int x, boolean y) { fcw.set(announcerPrefix + x + ".pickRandomLines", y); }
+	public void setIsCreated(int x, boolean y) { fcw.set(announcerPrefix + x + ".isCreated", y); }
+	public void setWorlds(int x, List<String> y) { fcw.setList(announcerPrefix + x + ".worlds", y); }
+	public void setX1(int x, int y) { fcw.set(announcerPrefix + x + ".x1", y); }
+	public void setY1(int x, int y) { fcw.set(announcerPrefix + x + ".y1", y); }
+	public void setZ1(int x, int y) { fcw.set(announcerPrefix + x + ".z1", y); }
+	public void setX2(int x, int y) { fcw.set(announcerPrefix + x + ".x2", y); }
+	public void setY2(int x, int y) { fcw.set(announcerPrefix + x + ".y2", y); }
+	public void setZ2(int x, int y) { fcw.set(announcerPrefix + x + ".z2", y); }
 	
-	protected void clearAnnouncement(int x) { config = plugin.getConfig(); config.set((announcerPrefix + x), null); plugin.saveConfig(); }
+	public void clearAnnouncement(int x) { fcw.set((announcerPrefix + x), null); }
 	
 	public void announcerFiles()
 	{
+		fcw = new FileConfigurationWrapper(FC_Announcer.plugin.getDataFolder().getAbsolutePath(), "config");
+		
 		//Housekeeping
 		plugin = FC_Announcer.plugin;
 		
@@ -64,32 +62,32 @@ public class AnnouncementFiles
 		String newAnnounce = "Announcement." + newPostion;
 		String line = "";
 		
-		config.set(newAnnounce + ".isCreated", config.get(old + ".isCreated"));
-		config.set(newAnnounce + ".isActive", config.get(old + ".isActive"));
-		config.set(newAnnounce + ".pickRandomLines", config.get(old + ".pickRandomLines"));
-		config.set(newAnnounce + ".interval", config.get(old + ".interval"));
+		fcw.set(newAnnounce + ".isCreated", fcw.get(old + ".isCreated"));
+		fcw.set(newAnnounce + ".isActive", fcw.get(old + ".isActive"));
+		fcw.set(newAnnounce + ".pickRandomLines", fcw.get(old + ".pickRandomLines"));
+		fcw.set(newAnnounce + ".interval", fcw.get(old + ".interval"));
 		
-		config.set(newAnnounce + ".x1", config.get(old + ".x1"));
-		config.set(newAnnounce + ".y1", config.get(old + ".y1"));
-		config.set(newAnnounce + ".z1", config.get(old + ".z1"));
-		config.set(newAnnounce + ".x2", config.get(old + ".x2"));
-		config.set(newAnnounce + ".y2", config.get(old + ".y2"));
-		config.set(newAnnounce + ".z2", config.get(old + ".z2"));
+		fcw.set(newAnnounce + ".x1", fcw.get(old + ".x1"));
+		fcw.set(newAnnounce + ".y1", fcw.get(old + ".y1"));
+		fcw.set(newAnnounce + ".z1", fcw.get(old + ".z1"));
+		fcw.set(newAnnounce + ".x2", fcw.get(old + ".x2"));
+		fcw.set(newAnnounce + ".y2", fcw.get(old + ".y2"));
+		fcw.set(newAnnounce + ".z2", fcw.get(old + ".z2"));
 		
 		//For all lines
 		for (int i = 0; i < LINE_GROUP_CAP; i++)
 		{
-			line = config.getString(old + "." + i);
+			line = fcw.getString(old + "." + i);
 			
 			//If the old announcement isn't empty or null.
 			if (line != null && !isBlankString(line))
 			{
-				config.set(newAnnounce + "." + i, config.getString(old + "." + i));
+				fcw.set(newAnnounce + "." + i, fcw.getString(old + "." + i));
 			}
 		}
 		
 		//Remove the whole old announcement.
-		config.set(old, null);
+		fcw.set(old, null);
 	}
 	
 	public void rearrangeAnnouncements(int startingPoint)
