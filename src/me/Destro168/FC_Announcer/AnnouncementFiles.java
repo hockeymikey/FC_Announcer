@@ -15,7 +15,9 @@ public class AnnouncementFiles
 	
 	//Gets
 	public int getActiveAnnouncementCount() { return activeAnnouncementCount; }
+	
 	public String getLine(int x, int y) { return fcw.getString(announcerPrefix + x + "." + y); }
+	
 	public int getInterval(int x) { return fcw.getInt(announcerPrefix + x + ".interval"); }
 	public boolean getIsActive(int x) { return fcw.getBoolean(announcerPrefix + x + ".isActive"); }
 	public boolean getIsCreated(int x) { try { return fcw.getBoolean(announcerPrefix + x + ".isCreated"); } catch (NullPointerException e) { return false; } }
@@ -44,7 +46,7 @@ public class AnnouncementFiles
 	
 	public void clearAnnouncement(int x) { fcw.set((announcerPrefix + x), null); }
 	
-	public void announcerFiles()
+	public AnnouncementFiles()
 	{
 		fcw = new FileConfigurationWrapper(FC_Announcer.plugin.getDataFolder().getAbsolutePath(), "config");
 		

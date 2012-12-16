@@ -1,5 +1,6 @@
 package me.Destro168.FC_Announcer;
 
+import me.Destro168.FC_Suite_Shared.AutoUpdate;
 import me.Destro168.FC_Suite_Shared.SelectionVector;
 
 import org.bukkit.Bukkit;
@@ -52,6 +53,12 @@ public class FC_Announcer extends JavaPlugin
 				settingsManager.reload();
 			}
 		}, 20);
+		
+		try {
+			new AutoUpdate(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		//Log the succesful enable.
 		this.getLogger().info("Enabled Successfully");

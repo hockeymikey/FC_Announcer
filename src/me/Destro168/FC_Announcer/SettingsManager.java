@@ -121,10 +121,10 @@ public class SettingsManager
 			config.set("Settings.zoneSelectionToolID", 280);
 		}
 		
-		if (getVersion() < 5.4)
+		if (getVersion() < 5.41)
 		{
 			//Set the new version
-			config.set("Version", 5.4);
+			config.set("Version", 5.41);
 		}
 		
 		//Save config

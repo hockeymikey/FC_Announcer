@@ -1,5 +1,11 @@
 ~ FC_Announcer Changelog ~
 
+Version 5.41:
+
+- Fixed issue where announcements broke. Sorry about that. :S
+- Compatability update with FC_Suite_Shared.
+- Docs readded to jar file.
+
 Version 5.4
 
 General:
