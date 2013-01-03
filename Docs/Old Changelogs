@@ -1,0 +1,182 @@
+~ FC_Announcer Old Changelog ~
+
+Version 5.41:
+
+- Fixed issue where announcements broke. Sorry about that. :S
+- Compatability update with FC_Suite_Shared.
+- Docs readded to jar file.
+
+Version 5.4
+
+General:
+- Updated file access to use FC_Suite_Shared classes.
+- Setting renamed to "Settings" with an s. To update put an s at the end of Settings. I had to make the change, it was bugging me for too long. :)
+- This version being release mainly for compatibility with FC_Suite_Shared 2.0
+
+Installation:
+- FC_Suite_Shared is now it's own seperate plugin! Check it out -> http://dev.bukkit.org/server-mods/fc_suite_shared/
+
+Version 5.3:
+
+- Updated the functionality involving the wand for zones. Now you will be able to left-right click to define the zone. As well, the tool is customizable with the new field, "zoneSelectionToolID". Moved the selection code to a selection vector class in FC_Suite_Shared for use with FC_Rpg as well. Enjoy!
+
+Version 5.21:
+
+- Built CB release - Build #2377 - CB 1.3.2-R2.0
+- Even though this seems useless, the update to FC_Suite_Shared is included here which is good for plugin synchronization, also the free bump on the plugin listing doesn't hurt.
+
+Version 5.2:
+
+- Built CB release - Build #2377 - CB 1.3.2-R1.0
+- Added in new random ordering announcement group option, "PickRandomLines". Will make announcements appear in a random order. Managed to make it very optimized too imo.
+- Now using updated version of FC_Suite_Shared which adds a few new options and features. Check them out! Don't worry about the userinfo moving stuff in the FC_Suite_Shared changelog, that doesn't apply to this plugin.
+- Since I added "BroadcastTagText" to FC_Suite_Shared a while ago, the "BroadcastTag" setting in FC_Announcer is outdated and will automatically be removed. Use the BroadcastTagText in FC_Suite_Shared to set what you want your broadcast text to be.
+- Didn't add in /announcer reload because there should be no reason to have one. Everything automatically updates when one uses commands. If you are editing the file directly then you have to restart/reload sorry. Reloads are generally broken in bukkit.
+- Updated a lot of comments in the code.
+- Can now use announcement commands from console.
+- Standard generally all around good code improvements.
+- Now comes in a sexy package.
+
+Version 5.1:
+
+- Fixed pretty major bug where broadcast function was returning (noob overlook, haha) which meant that not everybody could see anouncements. 
+
+Version 5.0 Sexy Approved:
+
+- Updated version to 5.0. THINGS MAY BE BUGGY. But they shouldn't. 5.1 is my intended final super bugfixed version. Did major godlike bugtesting on every single possible little thing. Everything should be LEGIT bugfree now. But some bugs might have snuck through.
+- Start of announcements now has 20 second delay to give permissions a chance to catch up. Now when you /reload people will not miss announcements.
+- Updated default announcement message to say FC_Announcer instead of old ultraanouncer message.
+- Far more organized Announcer classes (2 to be exact) which reduced and organized code by a ton!
+- Added multi*world support. Comes with a new command, an updated /list groups, and a config string list.
+- Added a new sub*command to say an announcement whenever you want. This also doubles as a repository for FAQs that you want to send to players quickly. This feature is more powerful than it appears because you can use it to store messages to announce later. :)
+- Added in a few headers for the list sub*commands. Purely cosmetic.
+- Fixed an interesting bug where disabling an announcement meant that it wouldn't be loaded properly for only the next run due to autoenable occuring after announcement counting.
+- Lots of tiny other changes/tweaks that aren't really worthy of making on this list. :)
+- Fixed issue with new startups having null configuration options due to loading config options before they were set. 
+
+FC_Shared_Suite -> v1.0:
+
+- Can now configure the color scheme of all the FC plugins entirely. Purely cosmetic. I would highly recommend you change the colors though as it's a joke color scheme .
+- There are 3 permissions that were added a while ago when I did my permission overhaul, just they never got recognized.
+- Could always use, FC_Suite.mod as a 'super mod' for all FC_plugins. (Currently does nothing though)
+- Could always use, FC_Suite.admin as a 'super admin' for all FC_plugins.
+- Could always use, FC_Suite.owner as a 'owner' rank (higher than admin) for all FC_plugins. 
+
+Version 4.3:
+
+- Compiled on RB 1.3.1.
+- Completely reworked permissions.
+- Renamed FC_General to FC_Suite_Shared. 
+
+Version 4.2:
+
+- Properly implemented prevention for going past 1,000 for groups/lines. Has warning messages and everything now.
+- Reworked how arguments are parsed to be safer.
+- Removed /announcer help from help menu.
+- Fixed issue with using /announcer set where you couldn't actually create new announcement groups.
+- Added aliases remove and create for set and delete.
+- Should work with 1.3.1 fine but it's not compiled with CB 1.3.1. Going to wait for a RB. 
+
+Version 4.1:
+
+- FC_Announcer, allow [enable,disable] keywords for imput.
+- Right-click with stick for input.
+- Extracted zone location checking to FC_General for use with other plugins, namely FC_Bounties and FC_Rpg. Might find a use in FC_Bans eventually.
+- Heavily refactored and modularized a lot of code and put in heavy integration with FC_General.
+- New color scheme that is in line with the whole FC_Suite color scheme. 
+
+Version 4.0:
+
+- HUGE UPDATE - This update is as big as the 3.0 update and as such gets a version upgrade.
+- Completely refactored all of the code. I was being lazy about it before but I had a really good solution to everything in the shower that got rid of all the bugs probably. This code should be the most bug-free of any version and should also be the most feature-rich. I have to say that not everything will be listed in this changelog, just due to the number of changes. I've spent about 20 hours on this version between yesterday/today.
+- Removed deleteall from commands
+- List command works fully. Has sub-command 'groups' now. Shows very useful information
+- Zones implemented. See front page for information on how to operate zones.
+- Permission Plugins support should work perfectly now. Having a problem with one? Make a ticket.
+- Configuration file optimized to be up to my new standards. Configs should auto-update. If they don't, then just make a new one. Sorry :S
+- Tons of small stuff, just use the plugin and see.
+- Bunch of other stuff 
+
+Version 3.03:
+
+- Fixed all issues relating to referring to groups. Should be able to put lines inbetween announcements and have no problems as I had intended before. It shouldn't matter if your announcement group is at 2 or at 500. It should be loaded properly. You just have to have the permission for that group to see them.
+- Added new configuration option, "displayallannouncementsinconsole, will do exactly as it says, lol. Sorry for the one long word but it's pretty descriptive I must say. Configuration files should update to 3.03.
+- Using the "depend" keyword now to check that Vault is loaded before FC_Announcer loads. I was using a really complicated method before (fail).
+- Using Vault API now. You need VAULT now, you don't need Pex (I mean I love Pex but farewell!)
+- Bunch of tests on the plugin to make sure its working. Remember to leave a ticket if something isn't working. (I'm going to try to use tickets from now on).
+- Zones will be in the next release if this one isn't too buggy. (Shouldn't be) 
+
+Version 3.02:
+
+- Fixed an issue preventing set from working.
+- Adjusted colors of list command to correctly show color codes and to it will be white by default now if there aren't any color codes.
+- Handled issues that would occur if there were no announcements.
+- New Configs for version 3.01 were set to 3.1, might want to downgrade that to 3.01. (woops, won't happen again), config will update to 3.02 though properly at 3.01.
+- Everything should be working fine now so I can start working on new features, remember please leave comments if things aren't working! 
+
+Version 3.01
+
+- Fixed huge issue I created using schedulall.
+- Added new ignore permission node (check how to use section for info). (Also fixed issue with it)
+- Fixed interval command
+- Fixed announcements stacking up and not really having their proper interval after using the set command.
+- TONS of stuff behind the scenes fixed. There were a lot of bugs still, fixed.
+- Fixed really really big issue with intervals not properly updating and resetting. I had some bad config coding issues.
+- Changed colors a bit. 
+
+- Updated to R3.0 
+
+Version 3.0 - Revived!:
+
+- I have more time to work on plugins now so this plugin is coming back. It will also be used on my server from now on so yeah, here we go again! I'm way more motivated than before and out to server this wonderful community. Also renamed to model the the FabledCraft Gaming Community.
+- Completely recoded pretty much everything. Most algorithms were redesigned and old designs were recreated. There wasn't really much stuff that I could salvage in the realm of "fixable", almost everything had to get redone to fit my new standards. Almost everything that remains has been improved.
+- Exemption List, Ignore List and all related features for them are completely gone. Use the permission nodes better if you want specific players to see specific announcements. A few other things like status command is gone. I merged status into the list command so you can see if a command is on or off in the list command. Also since we have scroll for the chat it no longer takes an upper/lower limit. Clearconfig command is no longer needed so removed also, most commands auto-refresh the memory of the plugin so no need. Special code gone, all announcements can be put into the config in any order manually if you want. It accounts for space in the config and loads up everything. Basically it's pretty hard for things to get screwed up if you put in announcements and they are empty or skip spaces. Add command is gone, just use the set command, if you set a new group/line then it will automatically create a new announcement. Delete will also delete an announcement group if you delete the last line of a group.
+- Going to put this out as RELEASE and not BETA. Cause I'm not scared! I don't care if there are issues, I'll fix them in about a day, Muahahaha. 
+
+Version 2.0 - FINAL:
+
+- Lots of testing done to ensure features worked as they are supposed to.
+- Heavily updated help. Now features colors AND has proper commands for a few commands. Just 100% more polished now.
+- Added ignore permission to help prevent inheritance of group viewing.
+- Readded success message to clearconfig.
+- Made autoenable command actually work instead of displaying status command. (wrong function call... WOOPSIES)
+- Default interval for announcements is set to 1 minute (60 seconds). The 20 seconds was mostly for me testing. (refix later)
+- New special code!: (SKIPANNOUNCEMENT) - Allows you to make global announcements if you want! To use just add the code (SKIPANNOUNCEMENT) to any announcement line and that line will be skipped but STILL take up the time interval for using that announcement line. I won't be describing the process in full, but you can now stagger announcements for all groups thus letting 1 group always announcement at a certain interval in place of others. You can do a bunch of other staggering with this as well. Want to have 3 announcements with 5 seconds inbetween each other but 10 seconds inbetween each group of 3 announcements? Now you can!
+- Add command now doesn't append a space on the first argument. This gives you the option if you want it or not. Same goes for broadcast tag. No long will you have spaces you may or may not want. Fully customizable announcements are fully yours!
+- Reverted ticks per interval. Seems like bukkit is still doing 20 ticks an interval, at least on my server.
+- Renamed commands add to set, append to add, resetConfig to resetConfigurationFile. 
+
+Things that I didn't do:
+
+- Kept exemption list the way it is. I kind of like it not being in permissions and in the config file. Don't know why, I just do.
+- Increased ammount of announcements per group to 200 and groups to 200. Didn't make infinite... dynamic implementation is cool and all but there are some problems with it that I won't fix because if you skip announcements/skip groups/add too many announcements or groups/tons of other stuff probably, then you can cause big issues. If you need more then 40,000 announcements,.. find a different plugin, sorry, LOL! 
+
+Version 1.2:
+
+- Better way of determining first run for plugin. Fixes null exception on restarts/etc.
+- Cleaned up configuration file a lot. Should be TONS more manageble now and fix infinity issues. If there are still issues please be SPECIFIC as to what you did to replicate it please!
+- Customizable broadcast tag. Has new command: /announcer sbt. Can be any length of words.
+- Updated Interval Time as per Digitalink2008's notice.
+- New feature: exemption list! Now you can add anybody to the exemption list and they will see no broadcasts! Comes with /announcer addExemption|removeExemption|ListExemptions 
+
+Version 1.1:
+
+- Default announcement interval increased from 5 to 20.
+- Renamed permission autoannouncer.admin to ultraannouncer.admin.
+- If announcements are running on a group with no set announcement text lines, then a warning will pop up now (Bugfix, was meant to be in before). Updated /announcer help a ton.
+- Max number of announcements is now 15. List command updated to /announcer list [group] [lower limit] [upper limit] now to see announcements in the given range. This change was made due to announcements not being visible. Added colors!
+- UltraAnnouncement now supports colors! 
+
+Version 1.01:
+
+- Increased number of announcements from debug 5 back to 20. 
+
+Version 1.0:
+
+- This is the plugin that I want to be used. Suggestions can be taken on what to fix and what not to fix. Skipping beta because it works fine on my server and honestly if there are issues I'll just revert to beta. 
+
+Version 0.1:
+
+- Just hosting file on website. Majority of features are included but there are a few major bugs like if you enter out of range for commands, you will likely crash your server. Basically I wouldn't recommend using this unless you want to be VERY careful and are just plain desperate. 1.1 will have user controls to prevent this, interval adjustments, and more! 
+
+- Note: Due to very minor bugs sometimes being present in past releases, I will update the version on the website but not the source code. If I deem the need great enough or just feel like "it's about time" to update the Source Code, I will upload again. 

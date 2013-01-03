@@ -1,6 +1,6 @@
 name: FC_Announcer
 main: me.Destro168.FC_Announcer.FC_Announcer
-version: 5.41
+version: 5.42
 description: Ultimate Automatic Announcement Plugin
 commands:
     announcer:

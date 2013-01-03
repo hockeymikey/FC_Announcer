@@ -1,0 +1,46 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      ___           ___                    ___           ___                         ___           ___   
+     /\__\         /\__\                  /\__\         /\__\                       /\  \         /\  \  
+    /:/ _/_       /:/  /                 /:/ _/_       /:/ _/_         ___          \:\  \       /::\  \ 
+   /:/ /\__\     /:/  /                 /:/ /\  \     /:/ /\__\       /\__\          \:\  \     /:/\:\__\
+  /:/ /:/  /    /:/  /  ___            /:/ /::\  \   /:/ /:/ _/_     /:/  /      ___  \:\  \   /:/ /:/  /
+ /:/_/:/  /    /:/__/  /\__\          /:/_/:/\:\__\ /:/_/:/ /\__\   /:/__/      /\  \  \:\__\ /:/_/:/  / 
+ \:\/:/  /     \:\  \ /:/  /          \:\/:/ /:/  / \:\/:/ /:/  /  /::\  \      \:\  \ /:/  / \:\/:/  /  
+  \::/__/       \:\  /:/  /            \::/ /:/  /   \::/_/:/  /  /:/\:\  \      \:\  /:/  /   \::/__/   
+   \:\  \        \:\/:/  /              \/_/:/  /     \:\/:/  /   \/__\:\  \      \:\/:/  /     \:\  \   
+    \:\__\        \::/  /                 /:/  /       \::/  /         \:\__\      \::/  /       \:\__\  
+     \/__/         \/__/                  \/__/         \/__/           \/__/       \/__/         \/__/  
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Table of Contents:
+I: Introduction
+    a: Command Usage
+	b. Duration Command Argument Help
+II: Configuring the Configuration File
+III. Position On Offline-Mode Support
+	a. Regarding Player Count:
+	b. Server Bounty Generation Rules
+	c. Anti-Spawn Camping Feature
+
+I: Introduction
+
+	This is the help for FC_Announcer. This help will detail all the steps to configure this plugin.
+
+a. Command Usage
+
+	The base command for the plugin is /announcer. This command will show you the help for the plugin.
+
+II. Configuration Setup
+
+This section explains the configuration settings that can be found in the configuration file.
+
+- autoEnable -> (True/False) -> When enabled, announcements will automatically enable, if previously disabled, on restarts and reloads.
+- displayAnnouncementsInConsole -> (True/False) -> Will broadcast announcements into the console.
+- zoneSelectionToolID -> (Whole Number) -> This is the id of the material for zone selection.
+
+Notes / Warnings / Advice
+
+Note 1: The plugin allows you to edit the config file directly and via in-game commands. Using in-game commands is the SAFEST WAY to make announcement modifications. The plugin was designed for in-game command usage primarily.
+
+Note 2: If you have the star permission you will never see announcements, that is one of the smaller limitations of this plugin. As well, if you are op you will never see announcements, assuming that your permission provider makes op have all permissions. The fact of the matter is that when you are op, op makes your permissions such that you have permissions not explicitly given to your group. In this case, it's the ignore permission. When you are op, you have the view and ignore permission for every group. This means that there is no way for my plugin to actually differentiate whether or not you actually want to view or ignore an announcement. Thus, my plugin has to make a choice, to either let ops see all announcements or not. Ideally if you are using my plugin you want several announcement groups for specific areas, worlds, etc. Because of this, when ops can see all announcements, they receive tons of announcements from other undesired announcement groups. This means that chat for ops would get really spammy. As well, as a user you should likely want to prevent seeing announcements that aren't important to you so ultimately this supports having ops not seeing all announcements as well. Thus, my plugin makes it so that you can't see announcements as op. Regardless though, I am putting op in the same classification as the * node, only use op if you absolutely must or else define your permissions properly, one by one. I am not accommodating for * node or op mode as it is quite impossible currently. However, I do have a solution in the works for this.

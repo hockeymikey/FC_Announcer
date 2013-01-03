@@ -14,14 +14,13 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.command.ColouredConsoleSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class AnnouncerCE implements CommandExecutor
 {
 	private FC_Announcer plugin;
 	private MessageLib msgLib;
-	private ColouredConsoleSender console;
 	private Player player;
 	
 	public AnnouncerCE() { }
@@ -37,22 +36,16 @@ public class AnnouncerCE implements CommandExecutor
 		String arg2 = fap.getArg(2);
 		
 		if (sender instanceof Player)
-		{
 			player = (Player) sender;
-			console = null;
-			msgLib = new MessageLib(player);
-		}
-		else if (sender instanceof ColouredConsoleSender)
-		{
+		else if (sender instanceof ConsoleCommandSender)
 			player = null;
-			console = (ColouredConsoleSender) sender;
-			msgLib = new MessageLib(console);
-		}
 		else
 		{
 			FC_Announcer.plugin.getLogger().info("Unknown command sender, returning announcer command.");
 			return false;
 		}
+
+		msgLib = new MessageLib(sender);
 		
 		//Check 1 argument commands.
 		if (arg0.equalsIgnoreCase("list"))
