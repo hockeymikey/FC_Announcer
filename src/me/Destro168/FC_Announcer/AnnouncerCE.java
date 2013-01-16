@@ -488,8 +488,10 @@ public class AnnouncerCE implements CommandExecutor
 		loc1 = FC_Announcer.sv.getBlockLoc1(player);
 		loc2 = FC_Announcer.sv.getBlockLoc2(player);
 		
-		if (loc1 == null || loc2 == null)
-			return msgLib.errorInvalidSelection();
+		if (loc1 == null && loc2 == null)
+			return msgLib.errorInvalidSelectionNoPoints();
+		else if (loc1 == null || loc2 == null)
+			return msgLib.errorInvalidSelectionOnePoint();
 		
 		FC_Announcer.settingsManager.getAnnouncementGroup().setAnnouncementZone(inputGroup,
 			(int) loc1.getX(),
