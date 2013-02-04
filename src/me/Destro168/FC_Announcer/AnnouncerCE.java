@@ -346,7 +346,6 @@ public class AnnouncerCE implements CommandExecutor
 		String line = "";
 		int listCounter = 0;
 		int intGroup;
-		ColorLib colorlib = new ColorLib();
 		SuiteConfig cm = new SuiteConfig();
 		
 		//If the user enters in "groups", then display all groups that are active.
@@ -417,7 +416,7 @@ public class AnnouncerCE implements CommandExecutor
 						message += "Off";
 					
 					message += cm.primaryColor + "] [" + cm.secondaryColor + FC_Announcer.settingsManager.getAnnouncementGroup().getInterval(intGroup) +
-							cm.primaryColor + "] - " + cm.secondaryColor + colorlib.parse(line);
+							cm.primaryColor + "] - " + cm.secondaryColor + ColorLib.parse(line);
 					
 					msgLib.standardMessage(message);
 					

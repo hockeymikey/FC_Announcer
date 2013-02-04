@@ -121,10 +121,10 @@ public class SettingsManager
 			config.set("Settings.zoneSelectionToolID", 280);
 		}
 		
-		if (getVersion() < 5.44)
+		if (getVersion() < 5.45)
 		{
 			//Set the new version
-			config.set("Version", 5.44);
+			config.set("Version", 5.45);
 		}
 		
 		//Save config
@@ -219,7 +219,6 @@ public class SettingsManager
 		Location boundOne;
 		Location boundTwo;
 		LocationInsideAreaCheck liac;
-		ColorLib colorLib = new ColorLib();
 		FC_AnnouncerPermissions perms;
 		Random rand = new Random();
 		
@@ -253,7 +252,7 @@ public class SettingsManager
 			currentLine[group]++;
 			
 			//Set colors.
-			line = colorLib.parse(suiteconfig.broadcastTag + line);
+			line = ColorLib.parse(suiteconfig.broadcastTag + line);
 			
 			//Message the announcement to all players.
 			for (Player player: plugin.getServer().getOnlinePlayers()) 
