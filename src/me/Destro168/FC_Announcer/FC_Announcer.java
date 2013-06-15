@@ -95,6 +95,14 @@ public class FC_Announcer extends JavaPlugin
 			}
 		}
 	}
+		
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+            Player player = (Player) sender;
+            if(player.hasPermission("reload.reload"));
+            reloadConfig();
+            player.sendMessage(ChatColor.GREEN + "Configuration Reloaded!");
+            return false;
+	}
 }
 
 
