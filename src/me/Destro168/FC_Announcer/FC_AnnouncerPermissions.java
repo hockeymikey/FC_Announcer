@@ -37,4 +37,12 @@ public class FC_AnnouncerPermissions extends PermissionManager
 		
 		return false;
 	}
+	
+		public boolean reloadPlugin(int x)
+	{
+		if (permission.playerHas(player, "FC_Announcer.reload." + String.valueOf(x)))
+			return true;
+		
+		return false;
+	}
 }
