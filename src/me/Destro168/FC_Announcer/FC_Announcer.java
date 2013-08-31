@@ -1,7 +1,7 @@
 package me.Destro168.FC_Announcer;
 
-import me.Destro168.FC_Suite_Shared.AutoUpdate;
-import me.Destro168.FC_Suite_Shared.SelectionVector;
+import me.Destro168.FC_Announcer.AutoUpdate;
+import me.Destro168.FC_Announcer.SelectionVector;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
